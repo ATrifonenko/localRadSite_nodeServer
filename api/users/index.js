@@ -1,6 +1,6 @@
 const express = require("express");
 const checkAuth = require("./checkAuth");
-const signUp = require("./signUp");
+const signUp = require("./signup");
 const login = require("./login");
 const logout = require("./logout");
 
