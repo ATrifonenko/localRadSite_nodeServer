@@ -16,6 +16,7 @@ const getPhoneBook = (req, res) => {
       {
         model: models.Unit,
         attributes: [
+          "id",
           "subdivision",
           [
             models.sequelize.fn("COUNT", models.sequelize.col("sortId")),
@@ -40,6 +41,10 @@ const getPhoneBook = (req, res) => {
     ],
     order: [[models.Unit, "sortId"], "lastName", [models.Phone, "number"]],
     group: ["id", "phones.id"]
-  }).then(all => res.json({ phonebook: all }));
+  }).then(phonebook => {
+    models.Unit.findAll({ attributes: ["id", "subdivision"] }).then(units =>
+      res.json({ subdivision: units, phonebook: phonebook })
+    );
+  });
 };
 module.exports = getPhoneBook;

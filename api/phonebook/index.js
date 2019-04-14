@@ -1,10 +1,10 @@
 const express = require("express");
 const getPhoneBook = require("./getPhoneBook");
-const addRow = require("./addRow");
+const editPhoneBook = require("./editPhoneBook");
 
 const phonebook = express.Router();
 
 phonebook.get("/getPhoneBook", getPhoneBook);
-phonebook.get("/addRow", addRow);
+phonebook.post("/editPhoneBook", editPhoneBook);
 
 module.exports = phonebook;
