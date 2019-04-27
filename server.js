@@ -26,11 +26,7 @@ server.use(
 
 server.use(express.static(path.join(__dirname, "build")));
 server.use("/api", api);
-
-server.use("/uploads", function(req, res) {
-  var file = __dirname + "/uploads/" + req.path;
-  res.download(file); // Set disposition and send it.
-});
+server.use("/uploads", express.static("uploads"));
 
 server.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
