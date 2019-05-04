@@ -1,11 +1,11 @@
 const checkAuth = (req, res) => {
-  const { userId, userLogin, userPrivilege } = req.session;
+  const { userId, userName, userPrivilege } = req.session;
 
-  if (userId || userLogin || userPrivilege) {
+  if (userId || userName || userPrivilege) {
     res.json({
       user: {
         logged: true,
-        name: userLogin,
+        name: userName,
         privilege: userPrivilege
       }
     });

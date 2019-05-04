@@ -5,7 +5,7 @@ const addNews = (req, res) => {
   const storage = multer.diskStorage({
     destination: `./uploads/${req.session.userId}`,
     filename: function(req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, Date.now() + "_" + file.originalname);
     }
   });
   const upload = multer({
@@ -14,7 +14,7 @@ const addNews = (req, res) => {
 
   upload(req, res, err => {
     if (err) {
-      res.send(err); // TODO правильно отправлять ошибку в react
+      res.json({ errors: err });
     } else {
       const { userId } = req.session;
       const { title, text } = req.body;

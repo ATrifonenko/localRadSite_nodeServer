@@ -6,7 +6,7 @@ const editNews = (req, res) => {
   const storage = multer.diskStorage({
     destination: `./uploads/${req.session.userId}`,
     filename: function(req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, Date.now() + "_" + file.originalname);
     }
   });
   const upload = multer({
@@ -16,7 +16,7 @@ const editNews = (req, res) => {
   const { userId } = req.session;
   upload(req, res, err => {
     if (err) {
-      res.send(err); // TODO правильно отправлять ошибку в react
+      res.json({ errors: err });
     } else {
       const { title, text, newsId, delFile } = req.body;
 
@@ -32,7 +32,7 @@ const editNews = (req, res) => {
                 delFile.map(fileId => {
                   models.File.findByPk(fileId).then(file => {
                     fs.unlink(file.dataValues.path, err => {
-                      if (err) console.log(err); // TODO  ошибка, если файл был удален ранее
+                      if (err) res.json({ errors: err });
                     });
                     file.destroy();
                   });
