@@ -27,11 +27,12 @@ const delNews = async (req, res) => {
       id: newsId
     }
   }).then(() => {
-    models.News.findAll({
+    models.News.findAndCountAll({
       where: { userId },
       include: [{ model: models.File }],
-      order: [["datetime", "DESC"]]
-    }).then(news => res.json({ news: news }));
+      order: [["datetime", "DESC"]],
+      limit: 15
+    }).then(result => res.json({ news: result.rows, count: result.count }));
   });
 };
 
