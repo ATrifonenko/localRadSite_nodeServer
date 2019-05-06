@@ -1,13 +1,17 @@
-const checkAuth = (req, res) => {
-  const { userId, userName, userPrivilege } = req.session;
+const models = require("../../database");
 
-  if (userId || userName || userPrivilege) {
-    res.json({
-      user: {
-        logged: true,
-        name: userName,
-        privilege: userPrivilege
-      }
+const checkAuth = (req, res) => {
+  const { userId, userName } = req.session;
+
+  if (userId || userName) {
+    models.User.findByPk(userId).then(user => {
+      res.json({
+        user: {
+          logged: true,
+          name: userName,
+          privilege: user.privilege
+        }
+      });
     });
   } else {
     res.json({

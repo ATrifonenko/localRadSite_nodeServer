@@ -32,7 +32,6 @@ const signUp = (req, res) => {
           }).then(user => {
             req.session.userId = user.id;
             req.session.userLogin = user.login;
-            req.session.userPrivilege = user.privilege;
             res.json({
               user: { logged: true, name: user.name, privilege: user.privilege }
             });

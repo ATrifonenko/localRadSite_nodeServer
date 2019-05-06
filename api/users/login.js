@@ -25,7 +25,6 @@ const logIn = (req, res) => {
           } else {
             req.session.userId = user.id;
             req.session.userName = user.name;
-            req.session.userPrivilege = user.privilege;
             res.json({
               user: { logged: true, name: user.name, privilege: user.privilege }
             });
